@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block title %} Результаты поиска {% endblock %}
+
+{% block header %}
+    {% block background %}search-background{% endblock %}
+    {% block logo_class_styling %} justify-content-center mt-4{% endblock %}
+    {% block contacts %}{% endblock %}
+    {% block site_title%}{% endblock %}
+
+    {% block content %} 
+    <div class = "container">
+    {% block sort %}
+    <div class = "mx-auto sort">
+        <a href = "#" style = "float:right; margin-top: 7px;">От дешевых к дорогим</a>
+        <a href = "#" style = "float:left;  margin-top: 7px;">От дорогим к дешевым</a>
+    </div>
+    {% endblock sort %}
+    {% for hotel in search_results %}
+    {% include 'hotel_search.html' %}
+    {% endfor %}
+    </div>
+    {% endblock %}
+{% endblock %}

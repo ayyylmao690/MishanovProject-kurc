@@ -1,0 +1,88 @@
+{% extends "search_page.html" %}
+{% load mathfilters %}
+{% block title %} Формирование заказа {% endblock %}
+
+{% block header %}
+{% block background %}search-background{% endblock %}
+{% block logo_class_styling %} justify-content-center mt-4{% endblock %}
+{% block contacts %}{% endblock %}
+{% block site_title%}{% endblock %}
+{% block footer %}{%endblock%}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-3 div-search-res mx-auto">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <div class="rounded-start" style="width: 100%; height: 100%; background:#27758D;"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" style="margin-bottom: 0px;">{{hotel.name}}</h5>
+                    <p class="card-text"><small>{{hotel.country_id}}, {{hotel.town}}</small></p>
+                    <hr>
+                    <div class="card-text">
+                        <div class="row row-cols-2">
+                            {% if hotel.wi_fi == '1' %}
+                            <div class="col hotelAttribute">&#128246; Есть Wi-fi</div>
+                            {% endif %}
+                            {% if hotel.beach == '1' %}
+                            <div class="col hotelAttribute">&#127749; Близко к пляжу</div>
+                            {% endif %}
+                            {% if hotel.air_conditioning == '1' %}
+                            <div class="col hotelAttribute">&#128168; Есть кондиционер</div>
+                            {% endif %}
+                            {% if hotel.child == '1' %}
+                            <div class="col hotelAttribute">&#128103; Есть развлечения для детей</div>
+                            {% endif %}
+                            {% if hotel.bar == '1' %}
+                            <div class="col hotelAttribute">&#127865; Есть бар</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-text">
+                        <h4>Описание отеля</h5>
+                            {{hotel.desc}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="show_clients_forms">Заполнить данные клиента</button>
+    <div id="client-forms" style="display:none;">
+        <form method="post" action="">
+            {% csrf_token %}
+            {{formset.management_form}}
+            {% for form in formset %}
+            <h1 class="semi-text">Заполните данные туриста № {{forloop.counter}} {% if forloop.counter == 1 %}
+                (Заказчик) {% else %} (Член группы заказчика) {%endif%}</h1>
+            <div class="client-form">
+                {{form}}
+            </div>
+            {% endfor %}
+            <div class="client-form">
+                {{contact_number}}
+            </div>
+            <input class="btn btn-primary" style="background-color: #27758D !important; margin-bottom: 25px;"
+                type="submit" value="Завершить бронирование">
+        </form>
+    </div>
+</div>
+
+<script>
+    var btn1 = document.getElementById('show_clients_forms');
+    var forms = document.getElementById('client-forms');
+
+    function show_or_hide_forms() {
+        if (forms.style.display == "none")
+            forms.style.display = "block";
+        else
+            forms.style.display = "none";
+
+    }
+    btn1.onclick = show_or_hide_forms;
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% block content %}
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Заказ №{{ contr.id }}</h5>
+                <div class="card-text">
+                    <p>Заказчик: {{ contr.client_id.surname }} {{ contr.client_id.name }} {{ contr.client_id.patronymic }}</p>
+                    <p>Отель: <a href="#">{{ contr.hotel_id.name }}</a></p>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Контактный номер: {{ contr.contact_number }}</li>
+                <li class="list-group-item">Номер паспорта: {{ contr.client_id.pass_number }}</li>
+                <li class="list-group-item">Серия паспорта: {{ contr.client_id.pass_serial }}</li>
+                <li class="list-group-item">Номер группы: {{ contr.group_id.id }}</li>
+            </ul>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <a href="contract/{{contr.id}}/" class="card-link">Подробнее о заказе</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

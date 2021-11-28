@@ -1,0 +1,47 @@
+{% load mathfilters %}
+{% block content %}
+
+<div class="card mb-3 div-search-res mx-auto" style="max-width: 816px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <div class="rounded-start" style="width: 100%; height: 100%; background:#27758D;"></div>
+        </div>
+        <div class="col-md-5">
+            <div class="card-body">
+                <h5 class="card-title" style="margin-bottom: 0px;">{{hotel.name}}</h5>
+                <p class="card-text"><small>{{hotel.country_id}}, {{hotel.town}}</small></p>
+                <hr>
+                <p class="card-text">
+                    <div class="row row-cols-2">
+                        {% if hotel.wi_fi == '1' %}
+                        <div class="col hotelAttribute">&#128246; Есть Wi-fi</div>
+                        {% endif %}
+                        {% if hotel.beach == '1' %}
+                        <div class="col hotelAttribute">&#127749; Близко к пляжу</div>
+                        {% endif %}
+                        {% if hotel.air_conditioning == '1' %}
+                        <div class="col hotelAttribute">&#128168; Есть кондиционер</div>
+                        {% endif %}
+                        {% if hotel.child == '1' %}
+                        <div class="col hotelAttribute">&#128103; Есть развлечения для детей</div>
+                        {% endif %}
+                        {% if hotel.bar == '1' %}
+                        <div class="col hotelAttribute">&#127865; Есть бар</div>
+                        {% endif %}
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% csrf_token %}
+            <a href="/make-order/{{hotel.id}}/?town={{town_from}}&where={{hotel.country_id.id}}&how_long={{days}}&when={{when}}&tourists={{tourists}}">
+                <div class="d-flex flex-column justify-content-center" id = "buy-div" style="height: 100%;">
+                    <p id="goToBuy"> Перейти к бронированию</p>
+                    <p id="price">{{hotel.price|mul:days}}р</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

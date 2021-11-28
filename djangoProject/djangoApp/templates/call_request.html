@@ -1,0 +1,16 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Система-Звонки{% endblock %}
+{%block currPath%}
+<div class="path"><a href="/agent/">Система ></a><span class="nextPath">Открытые заявки</span></div>
+{%endblock%}
+{% block  content %}
+<!-- Begin of card space -->
+        <div class="row row-cols-2 row-cols-md-3 g-4">
+
+            {% for call in call_requests %}
+            {% include 'call_card.html' %}
+            {% endfor %}
+
+        </div>
+<!-- End of card space -->
+{% endblock %}

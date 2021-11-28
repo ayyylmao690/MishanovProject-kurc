@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Главная страница {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/gallery/css/gallery.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        {% block menu %}
+        <nav class="menu">
+            <ul>
+                <li><a href="#">Еще...</a></li>
+                <li><a href="#">Поиск туров</a></li>
+                <li><a href="#">Доставка документов</a></li>
+                <li><a href="/" style="margin-right: 50px;">Главная</a></li>
+            </ul>
+        </nav>
+        {% endblock %}
+
+        <div id="{% block background %}index-background{% endblock %}">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="row {% block logo_class_styling %} {% endblock %}">
+                            {% block logo %}
+                            <a href="/" style="text-decoration: none">;
+                                <div id="logo">
+                                    <div class="row align-items-center">
+                                        <div class="col-4">
+                                            <img src="/static/img/header/logo.png" width="100%" height="100%">
+                                        </div>
+                                        <div class="col">
+                                            <div class="row" style="height: 55px;">
+                                                <div class="col">
+                                                    <p id="bigsitetitle">simple-turfirm<span>.ru</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p id="smallsitetitle">Ближе всех к морю и солнцу</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endblock %}
+                        </div>
+
+                        {% block contacts %}
+                        <div class="row">
+                            <div id="contacts">
+                                <div class="row" style="height: 35px; font-size: 24px;">
+                                    <div class="col">
+                                        <p>Офисы продаж</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>ул. Бебеля, 120/<span>+7 343 253-04-14</span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>ул. Московская, 77/<span>+7 343 253-04-04</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
+                    </div>
+                    {% block site_title %}
+                    <div class="col">
+                        <div id="scream-block">
+                            <div class="row">
+                                <p class="big-title">Заказывайте туры <span>онлайн</span></p>
+                            </div>
+                            <div class="row">
+                                <p class="semi-text">по ценам туроператоров или ниже<br>
+                                    с постоянной поддержкой от нас</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock %}
+                </div>
+
+                {% block search %}
+                <div class="row justify-content-center" style="margin-top: 70px;">
+                    <form action="/search-results/" method="GET" class="d-flex flex-row">
+                        {% csrf_token %}
+                        <div id="search">
+                            <div class="row align-items-center" style="height: 63.41px;">
+                                <div class="col-3 search-cell">
+                                    <div class="row">
+                                        <div class="col-3" style="margin-right: 8px;">
+                                            <img src="/static/img/header/search_icon/home.png" class="search-icon"
+                                                width="39" height="32" style="margin-top: 2px;">
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <span class="search-small-text">Город вылета</span>
+                                            </div>
+                                            <div class="row">
+                                                {{ search_form.town }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 search-cell">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="/static/img/header/search_icon/where.png" width="30.63"
+                                                height="32" class="search-icon">
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <span class="search-small-text">Страна, курорт, отель</span>
+                                            </div>
+                                            <div class="row">
+                                                {{ search_form.where }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col search-cell small-search-cell">
+                                    <div class="row">
+                                        <span class="search-small-text">Срок прибывания</span>
+                                    </div>
+                                    <div class="row">
+                                        {{ search_form.how_long }}
+                                    </div>
+                                </div>
+                                <div class="col search-cell small-search-cell">
+                                    <div class="row">
+                                        <span class="search-small-text">Дата вылета</span>
+                                    </div>
+                                    <div class="row">
+                                        {{ search_form.when }}
+                                    </div>
+                                </div>
+                                <div class="col small-search-cell">
+                                    <div class="row">
+                                        <span class="search-small-text">Туристов</span>
+                                    </div>
+                                    <div class="row">
+                                        {{ search_form.tourists }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary" id="findIt" value="Искать туры">
+                    </form>
+                    {% endblock search %}
+                </div>
+                <div class="row justify-content-center">
+                    <span class="semi-text" id="cantfound">НЕ СМОГЛИ НАЙТИ ПОДХОДЯЩИЙ ТУР?</span>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" id="getCall" data-bs-toggle="modal"
+                        data-bs-target="#getCallModal">Заказать звонок</a>
+                </div>
+                {% if messages %}
+                <div class="row justify-content-center">
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="modal fade" id="getCallModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Оставить заявку</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/getCall/" method="POST">
+                        {% csrf_token %}
+                        {{call_form.as_table}}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
+
+    <section class="section-red">
+        <div class="container">
+            <h5 class="big-title text-center mb-5">Уже что-то забронировали? Найдите свою бронь здесь!</h5>
+            <form action="/user/" method="get">
+                {%csrf_token%}
+                <div class="enter-container mx-auto" style="width: 700px;">
+                    <input type="submit" class="enterPL-invite" value="Поиск по номеру заказа"
+                        style="border:solid 4px #2598BA; height:60px;">{{contract_search_form}}
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal fade" id="contract_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Ваш заказ №{{contract.id}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>ФИО: {{contract.client_id.surname}} {{contract.client_id.name}} {{contract.client_id.patronymic}}</p>
+                    <p>Отель: {{contract.hotel_id.name}} - {{contract.hotel_id.country_id.name }}</p>
+                    <p>В группе: {%if contract.group_id%} Да {%else%} Нет {%endif%}</p>
+                    <p>Дата начала: {{contract.start_date}}</p>
+                    <p>Дата окончания: {{contract.end_date}}</p>
+                    <p>Контактный номер: {{contract.contact_number}}</p>
+                </div>
+                <div class="modal-footer">
+                    <span class="muted" style="margin-right:10px;">Если данные неверные, позвоните нам!</span>
+                    <a class="btn btn-secondary" href="/">Закрыть</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="mt-5">
+        <div class="container">
+            <h5 class="big-title text-center mb-5">Коротко о нас</h5>
+            <div class="media">
+                <img src="/static/img/icon/phone_icon.png" class="align-self-end" width="160" height="175" alt="...">
+                <div class="media-body">
+                    <h5 class="mt-0 media-title">Покупайте туры онлайн</h5>
+                    <p class="media-text">При бронировании онлайн вы экономите деньги, нервы, а главное, время! Не надо
+                        никому звонить,
+                        заполнять тонну бумаг, просто воспользуйтесь нашим сервисом и <span>совершите поездку своей
+                            мечты!</span></p>
+                </div>
+            </div>
+
+            <div class="media">
+                <img src="/static/img/icon/shield_icon.png" class="align-self-end" width="160" height="167" alt="...">
+                <div class="media-body">
+                    <h5 class="mt-0 media-title">Гарантия честности</h5>
+                    <p class="media-text">Мы тщательно следим и обеспечиваем честность всех совершенных покупок на нашей
+                        платформе. <span>У нас вы не
+                            увидите обманутых покупателей, завышенных цен и неоправданных ожиданий!</span></p>
+                </div>
+            </div>
+
+            <div class="media" style="margin-bottom: 0px;">
+                <img src="/static/img/icon/headphones_icon.png" class="align-self-end" width="174" height="178"
+                    alt="...">
+                <div class="media-body" style="margin-left:44.72px;">
+                    <h5 class="mt-0 media-title">Всегда поможем!</h5>
+                    <p class="media-text">Наши работники обеспечат вас поддержкой до покупки тура и даже после. Можете
+                        звонить по телефону,
+                        спрашивать в чате, главное не стесняйтесь, <span>ответим на все вопросы!</span></p>
+                </div>
+            </div>
+            <hr class="mt-5">
+        </div>
+    </section>
+    <section style="height: 530px;">
+        <div class="container">
+            <h5 class="big-title text-center mb-5 mt-5" style=>Фотографии клиентов</h5>
+            <div class="m-p-g">
+                <div class="m-p-g__thumbs" data-google-image-layout data-max-height="250">
+                    <img src="/static/img/gallery/tourist1.jpg" data-full="/static/img/gallery/tourist1.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist2.jpg" data-full="/static/img/gallery/tourist2.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist3.jpg" data-full="/static/img/gallery/tourist3.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist4.jpg" data-full="/static/img/gallery/tourist4.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist5.jpg" data-full="/static/img/gallery/tourist5.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist6.jpeg" data-full="/static/img/gallery/tourist6.jpeg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist7.jpg" data-full="/static/img/gallery/tourist7.jpg"
+                        class="m-p-g__thumbs-img" />
+                    <img src="/static/img/gallery/tourist8.jpg" data-full="/static/img/gallery/tourist7.jpg"
+                        class="m-p-g__thumbs-img" />
+                </div>
+                <div class="m-p-g__fullscreen"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-5 section-red">
+        <div class="container">
+            <h5 class="big-title text-center">Есть вопросы? Помочь с выбором?</h5>
+            <a href="#" class="btn btn-primary mx-auto mt-4" id="getCall_2" data-bs-toggle="modal"
+                data-bs-target="#getCallModal">Заказать звонок</a>
+        </div>
+    </section>
+    {% endblock %}
+
+
+    {% block footer %}
+    <footer class="align-items-center" id="index-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h6>Навигация</h6>
+                    <ul>
+                        <li><a href="#">Еще...</a></li>
+                        <li><a href="#">Поиск туров</a></li>
+                        <li><a href="#">Доставка документов</a></li>
+                        <li><a href="/" style="margin-right: 50px;">Главная</a></li>
+                        <li><a href="/agent/">Администрации</a></li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h6>Социальные сети</h6>
+                    <div class="d-flex">
+                        <a href="#"><img src="/static/img/icon/social/telegram.png" width="48" height="48"></a>
+                        <a href="#"><img src="/static/img/icon/social/youtube.png" width="48" height="48"></a>
+                        <a href="#"><img src="/static/img/icon/social/instagram.png" width="48" height="48"></a>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h6>Инфо</h6>
+                    <a href="/" style="text-decoration:none;">
+                        <p style="font-size: 25px; font-weight: 600; margin: 0">simple-turfirm<span>.ru</span></p>
+                    </a>
+                    <p>Simple-turfirm - это туристическая компания нового поколения. Мы
+                        используем
+                        все
+                        доступные сегодня
+                        технологии, чтобы сделать выбор, оплату и бронирование Вашего путешествия максимально удобными и
+                        приятными.</p>
+                </div>
+
+                <div class="col">
+                    <h6>Офисы продаж</h6>
+                    <p>ул. Бебеля, 120/<span>+7 343 253-04-14</span></p>
+                    <p>ул. Московская, 77/<span>+7 343 253-04-04</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {%endblock%}
+    <script>
+        var elem = document.querySelector('.m-p-g');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var gallery = new MaterialPhotoGallery(elem);
+        });
+    </script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/material-photo-gallery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+    </script>
+
+    {% if boolModal %}
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('contract_info'));
+        myModal.show();
+    </script>
+    {% endif %}
+</body>
+
+</html>

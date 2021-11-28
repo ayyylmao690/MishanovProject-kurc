@@ -1,0 +1,82 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Заказ №{{ full_contract.id }}{% endblock %}
+{% block currPath %}<div class="path"><a href="/agent/">Открытые заказы ></a> <a href = "/agent/contract/{{contract.id}}/">Заказ под номером: {{ contract.id }} > </a>Турист: {{client.id}} | {{client.surname}} {{client.name}} {{client.patronymic}}</div>
+{% endblock %}
+{% block content %}
+<div style="margin-top: 50px">
+    <h1 class="semi-text" style="margin-bottom:15px;">Информация о туристе</h1>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Имя</span><input type="text" value="{{ client.name }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Фамилия</span><input type="text" value="{{ client.surname }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Отчество</span><input type="text" value="{{ client.patronymic }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Адрес проживания</span><input type="text" value="{{ client.address }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Номер паспорта</span><input type="text" value="{{ client.pass_number }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Серия паспорта</span><input type="text" value="{{ client.pass_serial }}" readonly
+            class="enterPL-input" />
+    </div>
+
+    <h1 class="semi-text" style="margin-bottom:15px; margin-top: 35px">Информация о визах туриста</h1>
+    {% if visaExists %}
+        {% for visa in visas %}
+        <div class="row row-cols-2 row-cols-md-3 g-4">
+            {% include 'visa_card.html' %}
+        </div>
+        {% endfor %}
+    {% else %}
+    <p class="semi-text text-muted">Информация остутствует</p>
+    {% endif %}
+    <button type="button" class="btn btn-primary" id="add-visa" data-bs-toggle="modal"
+        data-bs-target="#exampleModal" style="margin-bottom: 20px;"><span style="font-weight: bold; font-size: 20px;"> +
+            &nbsp;</span>Добавить визу</button>
+
+    <!-- Модальное окно добавление визы -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Добавить визу для туриста</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" class="modal-form" action="">
+                        {% csrf_token %}
+                        {{visaForm.as_table}}
+                        <input type="submit" class="btn btn-primary" name="button" value="Добавить">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        document.getElementById("resident-name").value = "{{client.id}}";
+        document.getElementById("country-name").value = "{{contract.hotel_id.country_id.id}}";
+    })
+
+    exampleModal.addEventListener('hide.bs.modal', function (event) {
+        document.getElementById("resident-name").value = "";
+        document.getElementById("country-name").value = "";
+    })
+</script>
+{% endblock %}

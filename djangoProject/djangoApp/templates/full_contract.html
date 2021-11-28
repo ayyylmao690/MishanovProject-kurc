@@ -1,0 +1,74 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Заказ №{{ full_contract.id }}{% endblock %}
+{% block currPath %} <div class="path"><a href="/agent/">Открытые заказы ></a> Заказ под номером: {{ full_contract.id }} </div>{% endblock %}
+{% block content %}
+<div style="margin-top: 50px">
+    <h1 class="semi-text" style="margin-bottom:15px;">Туристы:</h1>
+    {% if full_contract.group_id %}
+    <ul>
+        {% for client in full_contract.group_id.client.all %}
+        <li><a href = "client/{{client.id}}/" class = "client-list">{{client.surname}} {{client.name}} {{client.patronymic}}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% else %}
+    <li><a href = "client/{{full_contract.client_id.id}}/" class = "client-list">{{full_contract.client_id.name}} {{full_contract.client_id.surname}} {{full_contract.client_id.patronymic}}</a></li>
+    {% endif %}
+    
+    <!-- end -->
+
+
+    <!-- Информация об отеле -->
+    <h1 class="semi-text" style="margin-bottom:15px; margin-top: 35px">Информация об отеле пребывания</h1>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Отель пребывания</span><input type="text" value="{{ full_contract.hotel_id.name }}"
+            readonly class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Страна пребывания</span><input type="text"
+            value="{{ full_contract.hotel_id.country_id.name }}" readonly class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Город</span><input type="text" value="{{ full_contract.hotel_id.town }}" readonly
+            class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Стоимость/день</span><input type="text" value="{{ full_contract.hotel_id.price }}"
+            readonly class="enterPL-input" />
+    </div>
+    <!-- end -->
+    <!-- Информация о заказе -->
+    <h1 class="semi-text" style="margin-bottom:15px; margin-top: 35px">Другая информация о заказе</h1>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Дата продажи</span><input type="text" value="{{ full_contract.sell_date }}"
+            readonly class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Дата начала тура</span><input type="text" value="{{ full_contract.start_date }}"
+            readonly class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Дата конца тура</span><input type="text" value="{{ full_contract.end_date }}"
+            readonly class="enterPL-input" />
+    </div>
+    <div class="enter-container" style="width: 500px;">
+        <span class="enterPL-invite">Контактный номер</span><input type="text"
+            value="{{ full_contract.contact_number }}" readonly class="enterPL-input" />
+    </div>
+    <!-- end -->
+</div>
+
+<script>
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        document.getElementById("resident-name").value = "{{full_contract.client_id.id}}";
+        document.getElementById("country-name").value = "{{full_contract.hotel_id.country_id.id}}";
+    })
+
+    exampleModal.addEventListener('hide.bs.modal', function (event) {
+        document.getElementById("resident-name").value = "";
+        document.getElementById("country-name").value = "";
+    })
+</script>
+{% endblock %}

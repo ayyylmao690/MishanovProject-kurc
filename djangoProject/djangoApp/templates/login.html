@@ -1,0 +1,21 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Система{% endblock %}
+{% block currPath %}{% endblock %}
+{% block  content %}
+<!-- Begin of card space -->
+    <div class="d-flex justify-content-center align-items-center flex-column" style = "margin-top: 120px;">
+        <h1 class = "semi-text">Авторизация пользователя</h1>
+        {% if request.user.is_authenticated %}
+        <p class = "semi-text text-muted">Вы уже авторизованы под именем: {{user.username}}</p>
+        {% else %}
+        <form method="POST">
+            {{login_form.non_field_errors}}
+            {% csrf_token %}
+            {{form.as_table}}
+            <!-- abcdefg1234567 -->
+            <button type="submit" class = "btn btn-primary" style = "margin-top: 20px;">Авторизоваться</button>
+        </form>
+        {% endif %}
+    </div>
+<!-- End of card space -->
+{% endblock %}

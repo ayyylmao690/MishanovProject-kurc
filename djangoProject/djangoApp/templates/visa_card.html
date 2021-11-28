@@ -1,0 +1,30 @@
+{% block content %}
+    <div class="col">
+        <div class="card" style = "margin-top: 20px;">
+            <div class="card-body">
+                <h5 class="card-title">Заказчик: {{ visa.client_id.id }} | {{ visa.client_id.surname }} {{ visa.client_id.name }} {{ visa.client_id.patronymic }}</h5>
+                <div class="card-text">
+                    <p>Страна: <a href="#">{{ visa.country_id.name }}</a></p>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Тип: {{ visa.type_id.name }}</li>
+                <li class="list-group-item">Номер визы {{ visa.visa_number }}</li>
+                <li class="list-group-item">Серия визы {{ visa.visa_serial }}</li>
+                <li class="list-group-item">Дата выдачи: {{ visa.start_date }}</li>
+                <li class="list-group-item">Действительна до: {{ visa.end_date }}</li>
+                <li class="list-group-item">Цена: {{ visa.price }}</li>
+            </ul>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-7">
+                        <a href="edit-visa/{{visa.id}}" class="card-link">Редактировать визу</a>
+                    </div>
+                    <div class="col-5">
+                        <a href="delete-visa/{{visa.id}}" class="card-link">Удалить визу</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

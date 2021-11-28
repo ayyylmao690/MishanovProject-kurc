@@ -1,0 +1,15 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Система{% endblock %}
+{% block currPath %}{% endblock %}
+{% block  content %}
+<!-- Begin of card space -->
+    <div class="d-flex justify-content-center align-items-center flex-column" style = "margin-top: 120px;">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_table}}
+            <!-- abcdefg1234567 -->
+            <button type="submit" class = "btn btn-primary" style = "background-color: #2AADD4 !important; margin-top: 20px;">Закончить редактировать</button>
+        </form>
+    </div>
+<!-- End of card space -->
+{% endblock %}

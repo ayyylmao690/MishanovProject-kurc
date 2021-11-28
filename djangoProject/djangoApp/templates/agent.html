@@ -1,0 +1,13 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Система{% endblock %}
+{% block  content %}
+<!-- Begin of card space -->
+        <div class="row row-cols-2 row-cols-md-3 g-4">
+
+            {% for contr in contracts %}
+            {% include 'order_card.html' %}
+            {% endfor %}
+
+        </div>
+<!-- End of card space -->
+{% endblock %}
