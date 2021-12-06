@@ -22,7 +22,12 @@ class SearchResPage(ListView):
     context_object_name = 'search_results'
 
     def get_queryset(self):
-        return Hotel.objects.filter(country_id__id=self.request.GET['where'])
+        if self.request.GET['sort'] == "cheap":
+            return Hotel.objects.filter(country_id__id=self.request.GET['where']).order_by('price')
+        elif self.request.GET['sort'] == "notcheap":
+            return Hotel.objects.filter(country_id__id=self.request.GET['where']).order_by('-price')
+        else:
+            return HttpResponseRedirect('/')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,6 +35,7 @@ class SearchResPage(ListView):
         context['town_from'] = self.request.GET['town']
         context['days'] = self.request.GET['how_long']
         context['when'] = self.request.GET['when']
+        context['where']=self.request.GET['where']
         context['tourists'] = self.request.GET['tourists']
         context['call_form']=CallForm()
         return context

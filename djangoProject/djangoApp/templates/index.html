@@ -160,6 +160,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" value="cheap" name='sort' style="display:none;">
                         <input type="submit" class="btn btn-primary" id="findIt" value="Искать туры">
                     </form>
                     {% endblock search %}
@@ -230,7 +231,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>ФИО: {{contract.client_id.surname}} {{contract.client_id.name}} {{contract.client_id.patronymic}}</p>
+                    <p>ФИО: {{contract.client_id.surname}} {{contract.client_id.name}} {{contract.client_id.patronymic}}
+                    </p>
                     <p>Отель: {{contract.hotel_id.name}} - {{contract.hotel_id.country_id.name }}</p>
                     <p>В группе: {%if contract.group_id%} Да {%else%} Нет {%endif%}</p>
                     <p>Дата начала: {{contract.start_date}}</p>
@@ -301,7 +303,7 @@
                         class="m-p-g__thumbs-img" />
                     <img src="/static/img/gallery/tourist7.jpg" data-full="/static/img/gallery/tourist7.jpg"
                         class="m-p-g__thumbs-img" />
-                    <img src="/static/img/gallery/tourist8.jpg" data-full="/static/img/gallery/tourist7.jpg"
+                    <img src="/static/img/gallery/tourist8.jpg" data-full="/static/img/gallery/tourist8.jpg"
                         class="m-p-g__thumbs-img" />
                 </div>
                 <div class="m-p-g__fullscreen"></div>
@@ -387,5 +389,4 @@
     </script>
     {% endif %}
 </body>
-
 </html>
