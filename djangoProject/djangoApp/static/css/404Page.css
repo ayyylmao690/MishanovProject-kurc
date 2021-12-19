@@ -1,0 +1,205 @@
+body {
+	background-image: url(../img/background.png);
+	height: 100%;
+	width: 100%;
+}
+header {
+	width: 100%;
+	font-family: Playfair Display;
+	font-style:normal;
+	color: #f2c0c0;
+}
+header h2 {
+	font-size: 181px;
+	line-height: normal;
+	font-weight: 600;
+	margin-top: -70px;
+}
+header p {
+	letter-spacing: 2px;
+}
+@media (max-width: 1200px) {
+	#jest-big-2, #jest-heart-big-2, #jest-sml-2, #jest-heart-sml-2, #foot {
+		display: none;
+	}
+}
+.jest-big {
+	background-image: url(../img/big/jest_big.png);
+	width: 426px;
+	height: 426px;
+	position: absolute;
+}
+.jest-heart-big {
+	background-image: url(../img/big/jest_sml.png);
+	width: 123px;
+	height: 123px;
+	position: absolute;
+}
+.jest-sml {
+	background-image: url(../img/sml/jest_sml_2.png);
+	width: 148px;
+	height: 147px;
+	position: absolute;
+}
+.jest-heart-sml {
+	background-image: url(../img/sml/jest_heart.png);
+	width: 68px;
+	height: 69px;
+	position: absolute;
+}
+header #bigTxt {
+	font-size: 54.73px;
+}
+header #smlTxt {
+	font-size: 45px;
+}
+#foot {
+		width: 100%;
+		height: 100px;
+		background: url(../img/foot.png) repeat;
+		background-size: contain;
+		position: absolute;
+		bottom:-500px;
+}
+#sky {
+	width: 100%;
+	border: none; /* Убираем границу */
+    background: linear-gradient(to top, #1e053e, #320867);; /* Цвет линии */
+    color: #A1A1A1; /* Цвет линии для IE6-7 */
+    height: 13px; /* Толщина линии */
+   	position: absolute;
+   	left: 0px;
+	top: 652px;
+
+	opacity: 0.7;
+}
+@keyframes rotation_right {
+    0% {
+        transform:rotate(0deg);
+    }
+    50% {
+        transform:rotate(360deg);
+    }
+    100% {
+    	transform: rotate(0deg);
+    }
+}
+@keyframes rotation_left {
+    0% {
+        transform:rotate(0deg);
+    }
+    50% {
+    	transform:rotate(-360deg);
+    }
+    100% {
+        transform:rotate(0deg);
+    }
+}
+@keyframes jump {
+	0% {
+		bottom: 55%;
+	}
+	20% {
+		bottom: 45%;
+	}
+	50% {
+		bottom: 0;
+	}
+	80% {
+		bottom: 45%;
+	}
+	100% {
+		bottom: 55%;
+	}
+}
+@keyframes moving {
+	0% {
+		right:100%;
+	}
+	50% {
+		right: 0;
+	}
+	100% {
+		right: 100%;
+	}
+}
+#sun {
+	background-image: url(../img/sor.png);
+	height: 250px;
+	width: 250px;
+	position: absolute;
+	background-size: contain;
+	animation: rotation_right 20s linear infinite, jump 2s linear infinite, moving 20s linear infinite;
+}
+#trail {
+	position: absolute;
+	left: 0;
+	top: 420px;
+}
+#jest-big-1 {
+	left: 0;
+	top: 680px;
+	animation-name: rotation_left;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-heart-big-1 {
+	left: 150px;
+	top: 836px;
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-sml-1 {
+	left: 390px;
+	top: 680px;
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-heart-sml-1 {
+	left: 430px;
+	top: 720px;
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-big-2 {
+	right: 0;
+	top: 670px;
+	transform: scale(-1,1);
+	animation-name: rotation_left;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-heart-big-2 {
+	right: 150px;
+	top:827px;
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-sml-2 {
+	right: 390px;
+	top:680px;
+	transform: scale(-1,1);
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#jest-heart-sml-2 {
+	right: 430px;
+	top:720px;
+	animation-name: rotation_right;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+	transform: scale(-1,1);
+}

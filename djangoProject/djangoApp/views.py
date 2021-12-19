@@ -114,7 +114,7 @@ class ClientInfo(LoginRequiredMixin, View):
         if visa.is_valid():
             obj_visa = visa.save()
             visa = VisaForm()
-            return HttpResponseRedirect('/agent/')
+            return HttpResponseRedirect(f'/agent/contract/{contract_id}')
         client = get_client_info(id)
         contract = get_full_contract(contract_id)
 
@@ -273,4 +273,8 @@ def delete_call(request, id):
     call = get_call_byId(id)
     call.delete()
     return HttpResponseRedirect('/agent/calls')
+
+
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
 # Create your views here.

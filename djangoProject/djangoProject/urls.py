@@ -36,3 +36,4 @@ urlpatterns = [
     
     path('logout/', logout_user, name='logout'),
 ]
+handler404 = "djangoApp.views.page_not_found_view"
