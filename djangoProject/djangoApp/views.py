@@ -16,6 +16,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
+class ClietsPage(LoginRequiredMixin, ListView):
+    model=Client
+    template_name = 'clients.html'
+    context_object_name='clients'
+
+
 class SearchResPage(ListView):
     model = Hotel
     template_name = 'search_page.html'
@@ -66,13 +72,25 @@ class CallsView(LoginRequiredMixin, ListView):
     context_object_name = 'call_requests'
 
 
-class Agent(LoginRequiredMixin, View):
+class Agent(LoginRequiredMixin, ListView):
     redirect_field_name = None
-
-    def get(self, request):
-        contracts = get_contracts()
-        context = {'contracts': contracts}
-        return render(request, "agent.html", context=context)
+    model = Contract
+    template_name = 'agent.html'
+    context_object_name = 'contracts'
+    def get_queryset(self):
+        if self.request.GET.get('id_client'):
+            clientId=self.request.GET.get('id_client')
+            if GroupClient.objects.filter(client=clientId):
+                groups = GroupClient.objects.filter(client=clientId)
+                contracts=Contract.objects.filter(group_id=[group.id for group in groups])
+                return contracts
+            elif Contract.objects.filter(client_id=clientId).exists():
+                return Contract.objects.filter(client_id=self.request.GET.get('id_client'))
+            else:
+               messages.error(self.request, 'Связанные заказы не найдены')
+               return Contract.objects.all()
+        else:
+            return Contract.objects.all()
 
 
 class FullContract(LoginRequiredMixin, View):
@@ -88,10 +106,9 @@ class FullContract(LoginRequiredMixin, View):
 class ClientInfo(LoginRequiredMixin, View):
     redirect_field_name = None
 
-    def get(self, request, contract_id, id):
+    def get(self, request, id):
 
         client = get_client_info(id)
-        contract = get_full_contract(contract_id)
 
         form = VisaForm()
         visas = get_client_visas(id)
@@ -99,7 +116,6 @@ class ClientInfo(LoginRequiredMixin, View):
         boolVisa = Visa.objects.filter(client_id=client).exists()
 
         context = {
-            'contract': contract,
             'visas': visas,
             'visas_type': typesV,
             'visaExists': boolVisa,
@@ -260,6 +276,15 @@ def edit_visa(request, contract_id, client_id, id):
     visa_form = VisaForm(instance=obj)
     context = {'form': visa_form}
     return render(request, 'edit_visa.html', context=context)
+
+
+@login_required
+def delete_contract(request, id):
+    instance = get_full_contract(id)
+    if instance.group_id != None:
+        GroupClient.objects.filter(id=instance.group_id.id).delete()
+    instance.delete()
+    return HttpResponseRedirect('/agent')
 
 
 @login_required

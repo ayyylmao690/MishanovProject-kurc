@@ -1,10 +1,11 @@
 {% extends 'secret_panel.html' %}
-{% block title %}Заказ №{{ full_contract.id }}{% endblock %}
-{% block currPath %}<div class="path"><a href="/agent/">Открытые заказы ></a> <a href = "/agent/contract/{{contract.id}}/">Заказ под номером: {{ contract.id }} > </a>Турист: {{client.id}} | {{client.surname}} {{client.name}} {{client.patronymic}}</div>
+{% block title %}Информация о клиенте{% endblock %}
+{% block currPath %}<div class="path"><a href="/agent/">Система > </a> <a href = "/agent/clients">Клиенты > </a>Турист {{client.name}} id: {{client.id}}</div>
 {% endblock %}
 {% block content %}
 <div style="margin-top: 50px">
     <h1 class="semi-text" style="margin-bottom:15px;">Информация о туристе</h1>
+    <a style="float:right;" class="btn btn-primary" href="/agent/?id_client={{client.id}}">Найти связанные заказы</a>
     <div class="enter-container" style="width: 500px;">
         <span class="enterPL-invite">Имя</span><input type="text" value="{{ client.name }}" readonly
             class="enterPL-input" />
@@ -71,12 +72,10 @@
     exampleModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
         document.getElementById("resident-name").value = "{{client.id}}";
-        document.getElementById("country-name").value = "{{contract.hotel_id.country_id.id}}";
     })
 
     exampleModal.addEventListener('hide.bs.modal', function (event) {
         document.getElementById("resident-name").value = "";
-        document.getElementById("country-name").value = "";
     })
 </script>
 {% endblock %}

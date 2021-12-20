@@ -1,20 +1,44 @@
 {% extends 'secret_panel.html' %}
 {% block title %}Заказ №{{ full_contract.id }}{% endblock %}
-{% block currPath %} <div class="path"><a href="/agent/">Открытые заказы ></a> Заказ под номером: {{ full_contract.id }} </div>{% endblock %}
+{% block currPath %} <div class="path"><a href="/agent/">Открытые заказы ></a> Заказ под номером: {{ full_contract.id }}
+</div>{% endblock %}
 {% block content %}
 <div style="margin-top: 50px">
     <h1 class="semi-text" style="margin-bottom:15px;">Туристы:</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete_submit" style="float:right;">Удалить контракт</button>
     <ul id="clients-ul">
-    {% if full_contract.group_id %}
+        {% if full_contract.group_id %}
         {% for client in full_contract.group_id.client.all %}
-        <li><a href = "client/{{client.id}}/" class = "client-list">{{client.surname}} {{client.name}} {{client.patronymic}}</a></li>
+        <li><a href="client/{{client.id}}/" class="client-list">{{client.surname}} {{client.name}}
+                {{client.patronymic}}</a></li>
         {% endfor %}
 
-    {% else %}
-    <li><a href = "client/{{full_contract.client_id.id}}/" class = "client-list">{{full_contract.client_id.name}} {{full_contract.client_id.surname}} {{full_contract.client_id.patronymic}}</a></li>
-    {% endif %}
+        {% else %}
+        <li><a href="/agent/client/{{full_contract.client_id.id}}/" class="client-list">{{full_contract.client_id.name}}
+                {{full_contract.client_id.surname}} {{full_contract.client_id.patronymic}}</a></li>
+        {% endif %}
     </ul>
     <!-- end -->
+
+
+    <div class="modal fade" id="delete_submit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Заказ №{{full_contract.id}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Удалить запись?
+                </div>
+                <div class="modal-footer">
+                    <a href={% url 'delete_contract' id=full_contract.id %}>Удалить</a>
+                    <a class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Закрыть</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Информация об отеле -->

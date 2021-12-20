@@ -25,15 +25,18 @@ urlpatterns = [
     path('agent/', Agent.as_view()),
     path('agent/calls/', CallsView.as_view(), name = "calls"),
     path('agent/contract/<int:id>/', FullContract.as_view(), name='get_full_contract'),
-    path('agent/contract/<int:contract_id>/client/<int:id>/', ClientInfo.as_view(), name='get_client_info'),
+    path('agent/client/<int:id>/', ClientInfo.as_view(), name='get_client_info'),
 
     path('make-order/<int:id>/', makeorder, name = "make_order"),
     path('getCall/', add_call, name='add_call'),
     path('agent/calls/delete-call/<int:id>/', delete_call, name = "delete_call"),
     path('user/', get_ClientContract_info, name="get_ClientContract_info"),
-    path('agent/contract/<int:contract_id>/client/<int:client_id>/delete-visa/<int:id>', delete_visa, name = "delete_visa"),
-    path('agent/contract/<int:contract_id>/client/<int:client_id>/edit-visa/<int:id>', edit_visa, name = "edit_visa"),
+    path('agent/client/<int:client_id>/delete-visa/<int:id>', delete_visa, name = "delete_visa"),
+    path('agent/client/<int:client_id>/edit-visa/<int:id>', edit_visa, name = "edit_visa"),
+    path('agent/contract/<int:id>/delete', delete_contract, name="delete_contract"),
+    path('agent/clients', ClietsPage.as_view(), name="ClietsPage"),
     
+
     path('logout/', logout_user, name='logout'),
 ]
 handler404 = "djangoApp.views.page_not_found_view"

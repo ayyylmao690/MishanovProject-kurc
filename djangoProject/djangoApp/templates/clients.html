@@ -1,0 +1,11 @@
+{% extends 'secret_panel.html' %}
+{% block title %}Клиенты{% endblock %}
+{% block currPath %}<div class="path"><a href="/agent/">Система ></a> Клиенты </div> {% endblock %}
+{% block content %}
+<ul style="margin-top: 20px">
+{% for client in clients %}
+    <li style="list-style-type: '\&#128100'; padding-left: 20px; margin-top:20px;"><a href="/agent/client/{{client.id}}/" class="client-list">{{client.name}}
+        {{client.surname}} {{client.patronymic}}, {{client.pass_and_serial}}, id={{client.id}}</a></li>
+{% endfor %}
+</ul>
+{% endblock content %}
