@@ -14,8 +14,8 @@
         {% endfor %}
 
         {% else %}
-        <li><a href="/agent/client/{{full_contract.client_id.id}}/" class="client-list">{{full_contract.client_id.name}}
-                {{full_contract.client_id.surname}} {{full_contract.client_id.patronymic}}</a></li>
+        <li><a href="/agent/client/{{full_contract.client_id.id}}/" class="client-list">
+                {{full_contract.client_id.surname}} {{full_contract.client_id.name}} {{full_contract.client_id.patronymic}}</a></li>
         {% endif %}
     </ul>
     <!-- end -->

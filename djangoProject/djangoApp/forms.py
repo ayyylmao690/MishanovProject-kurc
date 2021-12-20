@@ -37,7 +37,7 @@ class VisaForm(ModelForm):
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        fields = ['name', 'surname', 'patronymic', 'address',
+        fields = ['surname', 'name', 'patronymic', 'address',
                   'email', 'pass_number', 'pass_serial', ]
         labels = {
             'name': 'Имя',
@@ -49,8 +49,8 @@ class ClientForm(ModelForm):
             'pass_serial': 'Серия пасспорта',
         }
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control field', 'placeholder': 'Иван', 'required': 'required'}),
             'surname': forms.TextInput(attrs={'class': 'form-control field', 'placeholder': 'Мишанов', 'required': 'required'}),
+            'name': forms.TextInput(attrs={'class': 'form-control field', 'placeholder': 'Иван', 'required': 'required'}),
             'patronymic': forms.TextInput(attrs={'class': 'form-control field', 'placeholder': 'Олегович', 'required': 'required'}),
             'address': forms.TextInput(attrs={'class': 'form-control field', 'placeholder': 'Московская обл, ул. Пушкина, д. Колотушкина, д. 30 кв. 14', 'required': 'required'}),
             'email': forms.TextInput(attrs={'class': 'form-control field', 'type': 'email', 'placeholder': 'youremail@email.com', 'required': 'required'}),
