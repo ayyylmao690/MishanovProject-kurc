@@ -5,12 +5,14 @@
 {%endblock%}
 {% block  content %}
 <!-- Begin of card space -->
-        <div class="row row-cols-2 row-cols-md-3 g-4">
-
-            {% for call in call_requests %}
-            {% include 'call_card.html' %}
-            {% endfor %}
-
-        </div>
+{%if call_requests%}
+<div class="row row-cols-2 row-cols-md-3 g-4">
+    {% for call in call_requests %}
+    {% include 'call_card.html' %}
+    {% endfor %}
+</div>
+{%else%}
+<h1 class="semi-text text-muted">Заявки - отсутствуют</h1>
+{%endif%}
 <!-- End of card space -->
 {% endblock %}

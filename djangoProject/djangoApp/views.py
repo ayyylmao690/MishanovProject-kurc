@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render, HttpResponse, 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from .base import *
 from .forms import *
 from .models import *
@@ -15,7 +15,6 @@ from datetime import datetime
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from itertools import chain
 
 
 class ClietsPage(LoginRequiredMixin, ListView):

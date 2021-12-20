@@ -5,7 +5,7 @@
 {% block content %}
 <div style="margin-top: 50px">
     <h1 class="semi-text" style="margin-bottom:15px;">Туристы:</h1>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete_submit" style="float:right;">Удалить контракт</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete_submit" style="float:right;">Удалить заказ</button>
     <ul id="clients-ul">
         {% if full_contract.group_id %}
         {% for client in full_contract.group_id.client.all %}
@@ -33,7 +33,7 @@
                     Удалить запись?
                 </div>
                 <div class="modal-footer">
-                    <a href={% url 'delete_contract' id=full_contract.id %}>Удалить</a>
+                    <a class="btn btn-primary" href={% url 'delete_contract' id=full_contract.id %}>Удалить</a>
                     <a class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Закрыть</a>
                 </div>
             </div>
