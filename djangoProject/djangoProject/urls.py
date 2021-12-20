@@ -34,7 +34,7 @@ urlpatterns = [
     path('agent/client/<int:client_id>/delete-visa/<int:id>', delete_visa, name = "delete_visa"),
     path('agent/client/<int:client_id>/edit-visa/<int:id>', edit_visa, name = "edit_visa"),
     path('agent/contract/<int:id>/delete', delete_contract, name="delete_contract"),
-    path('agent/clients', ClietsPage.as_view(), name="ClietsPage"),
+    path('agent/clients', ClientsPage.as_view(), name="ClientsPage"),
     
 
     path('logout/', logout_user, name='logout'),

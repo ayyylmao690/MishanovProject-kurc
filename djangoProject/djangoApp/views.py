@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-class ClietsPage(LoginRequiredMixin, ListView):
+class ClientsPage(LoginRequiredMixin, ListView):
     model=Client
     template_name = 'clients.html'
     context_object_name='clients'
