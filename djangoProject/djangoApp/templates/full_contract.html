@@ -9,7 +9,7 @@
     <ul id="clients-ul">
         {% if full_contract.group_id %}
         {% for client in full_contract.group_id.client.all %}
-        <li><a href="client/{{client.id}}/" class="client-list">{{client.surname}} {{client.name}}
+        <li><a href="/agent/client/{{client.id}}/" class="client-list">{{client.surname}} {{client.name}}
                 {{client.patronymic}}</a></li>
         {% endfor %}
 

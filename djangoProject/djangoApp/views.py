@@ -9,6 +9,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from .base import *
 from .forms import *
+from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
 from datetime import timedelta
@@ -82,14 +83,14 @@ class Agent(LoginRequiredMixin, ListView):
         if self.request.GET.get('id_client'): #Если был произведен поиск заказов связанных с клиентом
             clientId=self.request.GET.get('id_client')
             if GroupClient.objects.filter(client=clientId) or Contract.objects.filter(client_id=clientId).exists(): #Поиск связей в заказах и группах
-                contractsGroup=""
-                contractsClient=""
+                contractsGroup=Contract.objects.none()
+                contractsClient=Contract.objects.none()
                 if GroupClient.objects.filter(client=clientId).exists():
                     groups = GroupClient.objects.filter(client=clientId)
                     contractsGroup=Contract.objects.filter(group_id__in=[group.id for group in groups])
-                if Contract.objects.filter(client_id=clientId).exists() and not ([contractCl.id for contractCl in Contract.objects.filter(client_id=clientId)] == [contractGr.id for contractGr in contractsGroup]):
+                if Contract.objects.filter(client_id=clientId).exists():
                     contractsClient=Contract.objects.filter(client_id=clientId)
-                contractRes = list(chain(contractsGroup, contractsClient))
+                contractRes = contractsClient.union(contractsGroup)
                 return contractRes
             else:
                messages.error(self.request, 'Связанные заказы не найдены')
@@ -130,21 +131,19 @@ class ClientInfo(LoginRequiredMixin, View):
 
         return render(request, "client_info.html", context=context)
 
-    def post(self, request, contract_id, id):
+    def post(self, request, id):
         visa = VisaForm(request.POST or None)
         if visa.is_valid():
             obj_visa = visa.save()
             visa = VisaForm()
-            return HttpResponseRedirect(f'/agent/contract/{contract_id}')
+            return HttpResponseRedirect(f'/agent/client/{id}')
         client = get_client_info(id)
-        contract = get_full_contract(contract_id)
 
         form = VisaForm()
         visas = get_client_visas(id)
         typesV = get_visas_types()
         boolVisa = Visa.objects.filter(client_id=client).exists()
         context = {
-            'contract': contract,
             'visas': visas,
             'visas_type': typesV,
             'visaExists': boolVisa,
@@ -269,7 +268,7 @@ def add_call(request):
 
 
 @login_required
-def edit_visa(request, contract_id, client_id, id):
+def edit_visa(request, client_id, id):
     obj = get_visa_byId(id)
     if request.method == "POST":
         visa = VisaForm(request.POST or None, instance=obj)
@@ -277,7 +276,7 @@ def edit_visa(request, contract_id, client_id, id):
         if visa.is_valid():
             obj_visa = visa.save(commit=False)
             obj_visa.save()
-            return HttpResponseRedirect(f'/agent/contract/{contract_id}/client/{client_id}/')
+            return HttpResponseRedirect(f'/agent/client/{client_id}/')
     visa_form = VisaForm(instance=obj)
     context = {'form': visa_form}
     return render(request, 'edit_visa.html', context=context)
@@ -293,10 +292,10 @@ def delete_contract(request, id):
 
 
 @login_required
-def delete_visa(request, contract_id, client_id, id):
+def delete_visa(request, client_id, id):
     visa = get_visa_byId(id)
     visa.delete()
-    return HttpResponseRedirect(f'/agent/contract/{contract_id}/client/{client_id}/')
+    return HttpResponseRedirect(f'/agent/client/{client_id}/')
 
 @login_required
 def delete_call(request, id):
