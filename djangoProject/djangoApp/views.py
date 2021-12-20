@@ -14,6 +14,7 @@ from datetime import datetime
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from itertools import chain
 
 
 class ClietsPage(LoginRequiredMixin, ListView):
@@ -78,19 +79,23 @@ class Agent(LoginRequiredMixin, ListView):
     template_name = 'agent.html'
     context_object_name = 'contracts'
     def get_queryset(self):
-        if self.request.GET.get('id_client'):
+        if self.request.GET.get('id_client'): #Если был произведен поиск заказов связанных с клиентом
             clientId=self.request.GET.get('id_client')
-            if GroupClient.objects.filter(client=clientId):
-                groups = GroupClient.objects.filter(client=clientId)
-                contracts=Contract.objects.filter(group_id=[group.id for group in groups])
-                return contracts
-            elif Contract.objects.filter(client_id=clientId).exists():
-                return Contract.objects.filter(client_id=self.request.GET.get('id_client'))
+            if GroupClient.objects.filter(client=clientId) or Contract.objects.filter(client_id=clientId).exists(): #Поиск связей в заказах и группах
+                contractsGroup=""
+                contractsClient=""
+                if GroupClient.objects.filter(client=clientId).exists():
+                    groups = GroupClient.objects.filter(client=clientId)
+                    contractsGroup=Contract.objects.filter(group_id__in=[group.id for group in groups])
+                if Contract.objects.filter(client_id=clientId).exists() and not ([contractCl.id for contractCl in Contract.objects.filter(client_id=clientId)] == [contractGr.id for contractGr in contractsGroup]):
+                    contractsClient=Contract.objects.filter(client_id=clientId)
+                contractRes = list(chain(contractsGroup, contractsClient))
+                return contractRes
             else:
                messages.error(self.request, 'Связанные заказы не найдены')
                return Contract.objects.all()
         else:
-            return Contract.objects.all()
+            return Contract.objects.all() #Обычный сценарий отображения
 
 
 class FullContract(LoginRequiredMixin, View):
