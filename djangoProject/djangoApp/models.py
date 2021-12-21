@@ -25,10 +25,13 @@ class Client(models.Model):
     email = models.CharField(max_length=50)
     pass_and_serial = models.CharField(
         max_length=12, db_index=True, null=True, blank=True)
+
+    numeric = RegexValidator(r'^[0-9+]', 'В этом поле разрешены только цифры')
+
     pass_number = models.CharField(max_length=6, validators=[
-                                   MinLengthValidator(6, 'Длина номера паспорта 6 цифр')])
+                                   MinLengthValidator(6, 'Длина номера паспорта 6 цифр'), numeric])
     pass_serial = models.CharField(max_length=4, validators=[
-                                   MinLengthValidator(4, 'Длина серии паспорта 4 цифры')])
+                                   MinLengthValidator(4, 'Длина серии паспорта 4 цифры'), numeric])
 
     def __str__(self):
         return "%s | %s %s %s, %s %s" % (
